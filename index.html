@@ -652,23 +652,41 @@ const radarChart = new Chart(radarChartCanvas, {
         }]
     },
     options: {
-        scales: {
-            r: {
-                min: 0,
-                max: 5,
-                ticks: {
-                    stepSize: 1 // Add this line to display only whole numbers
-                },
-                grid: {
-                    color: 'rgba(0, 0, 0, 0.1)'
-                },
-                angleLines: {
-                    color: 'rgba(0, 0, 0, 0.1)'
-                },
-                pointLabels: {
-                    color: 'rgba(0, 0, 0, 1)'
+    scales: {
+        r: {
+            min: 0,
+            max: 5,
+            ticks: {
+                stepSize: 1
+            },
+            grid: {
+                circular: true, // Add this line to make the grid circular
+                color: 'rgba(0, 0, 0, 0.1)'
+            },
+            angleLines: {
+                color: 'rgba(0, 0, 0, 0.1)'
+            },
+            pointLabels: {
+                color: 'rgba(0, 0, 0, 1)'
+            }
+        }
+    },
+    elements: {
+        line: {
+            tension: 0.4 // Add this line to curve the lines
+        }
+    },
+    plugins: {
+        tooltip: {
+            callbacks: {
+                label: function(context) {
+                    const component = components.find(comp => comp.name === context.label);
+                    return `${context.label}: ${context.raw} - ${component.description}`;
                 }
             }
+        }
+    }
+}
         },
         plugins: {
             tooltip: {
